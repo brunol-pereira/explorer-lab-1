@@ -81,3 +81,55 @@ const cardNumberPadrao = {
 }
 
 const cardMasked = IMask(cardNumber, cardNumberPadrao)
+
+//botão "adicionar cartão"
+const addButton = document.querySelector("#add-card")
+addButton.addEventListener("click", () => {
+    alert("Cartao adicionado!")
+})
+
+//Não atualiza a página com submit
+document.querySelector("form").addEventListener("submit", (event) => {
+    event.preventDefault()
+})
+
+//Trocar o nome no cartão para o nome informado no formulário
+const cardHolder = document.querySelector("#card-holder")
+cardHolder.addEventListener("input", () => {
+    const ccHolder = document.querySelector(".cc-holder .value")
+
+    ccHolder.innerText = cardHolder.value.length === 0 ? "FULANO DA SILVA" : cardHolder.value 
+})
+
+//Trocar o cvc no cartão para o cvc informado no formulário
+cvcMasked.on("accept", () => {
+    updateCVC(cvcMasked.value);
+})
+
+function updateCVC(code) {
+    const ccSecurity = document.querySelector(".cc-security .value")
+    ccSecurity.innerText = code.length === 0 ? "123" : code
+}
+
+//Trocar o número do cartão para o número informado no formulário
+cardMasked.on("accept", () => {
+    const cardType = cardMasked.masked.currentMask.cardtype
+    setCardType(cardType)
+    updateNumber(cardMasked.value);
+})
+
+function updateNumber(number) {
+    const ccNumber = document.querySelector(".cc-number")
+    
+    ccNumber.innerText = number.length === 0 ? "1234 1234 1234 1234" : number
+}
+
+//Trocar a data de vencimento no cartão para a data de vencimento informado no formulário
+DtVencMasked.on("accept", () => {
+    updateDtVenc(DtVencMasked.value);
+})
+
+function updateDtVenc(data) {
+    const ccDtVenc = document.querySelector(".cc-expiration .value")
+    ccDtVenc.innerText = data.length === 0 ? "02/32" : data
+}
